@@ -1,0 +1,82 @@
+version: "3.0"
+services:
+  #  laravel-web:
+  #    depends_on:
+  #      - laravel-db
+  #    container_name: laravel-web
+  #    image: bitnami/laravel:latest
+  #    environment:
+  #      - DB_HOST=laravel-db
+  #      - DB_USERNAME=root
+  #      - DB_DATABASE=sales_report
+  #      - DB_PASSWORD=123456
+  #    ports:
+  #      - "8000:3000"
+  #    networks:
+  #      - laraveldev_net
+  #    restart: always
+  #    volumes:
+  #      - C:\laravel_project\app:/app
+    
+  #  laravel-account:
+  #    depends_on:
+  #      - laravel-db
+  #    container_name: laravel-account
+  #    image: bitnami/laravel:latest
+  #    environment:
+  #      - DB_HOST=laravel-db
+  #      - DB_USERNAME=root
+  #      - DB_DATABASE=bank_account
+  #      - DB_PASSWORD=123456
+  #    ports:
+  #      - "9000:3000"
+  #    networks:
+  #      - laraveldev_net
+  #    restart: always
+  #    volumes:
+  #      - C:\laravel_project\app_account:/app
+       
+   laravel-booking:
+     depends_on:
+       - laravel-db
+     container_name: laravel-booking
+     image: bitnami/laravel:latest
+     environment:
+       - DB_HOST=laravel-db
+       - DB_USERNAME=root
+       - DB_DATABASE=booking_present
+       - DB_PASSWORD=123456
+     ports:
+       - "8080:3000"
+     networks:
+       - laraveldev_net
+     restart: always
+     volumes:
+       - C:\laravel_project\app_booking:/app
+
+   laravel-db:
+     container_name: laravel-db
+     image: mysql:5.7
+     environment:
+       - MYSQL_ROOT_PASSWORD=123456
+     networks:
+       - laraveldev_net
+     restart: always
+     volumes:
+       - C:\laravel_project\mysql:/var/lib/mysql
+       - C:\laravel_project\data:/root
+
+   laravel-phpmyadmin:
+     container_name: laravel-phpmyadmin
+     image: phpmyadmin/phpmyadmin
+     environment:
+       - PMA_HOST=laravel-db
+     ports:
+       - "8001:80"
+     networks:
+       - laraveldev_net
+     restart: always
+
+networks:
+   laraveldev_net:
+     driver: bridge
